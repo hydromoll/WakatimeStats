@@ -1,22 +1,32 @@
 import { Container, Stack, SText } from "hydrostyles";
 import React, { FC, useState } from "react";
 import styled from "styled-components/native";
+import { User } from "../@types/user";
+import { UserResponse } from "../@types/wakatimeUser";
 import { colors } from "../constants";
 import { useFetching } from "../hooks/useFetching";
+import { Stats } from "./stats";
 interface Props {
   hello?: string;
 }
 
 export const Auth: FC<Props> = () => {
-  const [token, setToken] = useState<string>("");
-  const [fetching, isLoading, error] = useFetching(() => auth());
   const tk = "waka_f7f59e45-5263-4ac3-873f-e48f642f04cb";
+  const [token, setToken] = useState<string>(tk);
+  const [fetching, isLoading, error] = useFetching(() => auth());
+  const [user, setUser] = useState<User>({} as User);
   const auth = async () => {
     if (token.length > 0) {
       const response = await fetch(
         `https://wakatime.com/api/v1/users/current/?api_key=${token}`
       );
-      const data = await response.json();
+      const data = (await response.json()) as UserResponse;
+      console.log("data =>", data);
+      setUser({
+        username: data.data.username,
+        country: data.data.city.country,
+        photo: data.data.photo,
+      });
       if ("error" in data) {
         throw new Error(data.error);
       }
@@ -48,6 +58,7 @@ export const Auth: FC<Props> = () => {
             <SText color={colors.text}>Error {error + ""}</SText>
           </>
         )}
+        <Stats user={user} />
       </Stack>
     </Container>
   );
