@@ -1,30 +1,27 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { Auth } from "./src/screens/auth";
+import React, { useEffect, useState } from "react";
+import { MainNavigation } from "./src/navigation/main";
 
 export default function App() {
+  const [token, setToken] = useState<boolean>(false);
+
+  useEffect(() => {
+    (async () => {
+      const tokenCache = await AsyncStorage.getItem("token");
+      if (tokenCache) {
+        setToken(true);
+        console.log("token", token);
+        return;
+      }
+      setToken(false);
+    })();
+  }, []);
+
   return (
-    <Auth />
-    // <View style={styles.container}>
-    //   <Text>Open up App.tsx to start working on your!</Text>
-    //   <Text>Open up App.tsx to start!</Text>
-    //   <View style={{ height: 50, width: 50, backgroundColor: "red" }}></View>
-    //   <Pressable
-    //     style={{ width: 300, height: 40, backgroundColor: "blue" }}
-    //     onPress={() => console.log("object")}
-    //   >
-    //     <Text>Press me!</Text>
-    //   </Pressable>
-    //   <StatusBar style="auto" />
-    // </View>
+    <>
+      <MainNavigation isAuth={token} />
+      <StatusBar style="light" />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

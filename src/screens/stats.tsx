@@ -1,15 +1,20 @@
-import { Container, Stack, SText } from "hydrostyles";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Stack, SText } from "hydrostyles";
 import React, { FC } from "react";
 import { Dimensions } from "react-native";
 import { LineChart, PieChart } from "react-native-chart-kit";
 import styled from "styled-components/native";
+import { RootStackParamList } from "../@types/navigation";
 import { User } from "../@types/user";
 import { colors } from "../constants";
 import { formatLanguage } from "../utils/languageDataFormatter";
 
-interface Props {
+type Props = NativeStackScreenProps<RootStackParamList, "stats"> & {
   user: User;
-}
+};
+// interface Props {
+//   user: User;
+// }
 
 const data = [
   {
@@ -193,7 +198,7 @@ export const Stats: FC<Props> = ({ user }) => {
           bezier
         />
 
-        <SText>Languages:</SText>
+        <SText color={"white"}>Languages:</SText>
 
         <PieChart
           data={langData}
