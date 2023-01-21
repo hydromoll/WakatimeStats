@@ -33,3 +33,13 @@ export interface Category {
   name: string;
   total: number;
 }
+
+export type Insights = {
+  labels: string[];
+  datasets: {
+    data: number[];
+    color: (opacity?: number) => string;
+    strokeWidth: number;
+  };
+  legend: string[];
+};

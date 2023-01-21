@@ -1,4 +1,4 @@
-export const getLanguageColor = {
+export const getLanguageColor: Record<string, string> = {
   "1C Enterprise": "#814CCC",
   ABAP: "#E8274B",
   "AGS Script": "#B9D9FF",
@@ -329,5 +329,3 @@ export const getLanguageColor = {
   xBase: "#3a4040",
   Other: "#1f9aef",
 };
-
-//   arr.map()

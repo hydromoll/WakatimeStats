@@ -12,11 +12,11 @@ interface Props {
 }
 
 export const MainNavigation: FC<Props> = ({ isAuth }) => {
-  console.log("IS AUTH", isAuth + "");
+  console.log(isAuth);
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={isAuth ? "stats" : "auth"}
+        initialRouteName={!isAuth ? "stats" : "auth"}
         screenOptions={{
           headerShown: false,
         }}

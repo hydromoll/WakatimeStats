@@ -1,5 +1,7 @@
+import { User } from "./user";
+
 export type RootStackParamList = {
   auth: undefined;
   home: undefined;
-  stats: undefined;
+  stats: User;
 };

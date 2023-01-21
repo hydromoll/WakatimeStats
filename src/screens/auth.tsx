@@ -1,38 +1,50 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Container, Stack, SText } from "hydrostyles";
 import React, { FC, useState } from "react";
 import styled from "styled-components/native";
 import { RootStackParamList } from "../@types/navigation";
-import { User } from "../@types/user";
 import { UserResponse } from "../@types/wakatimeUser";
 import { colors } from "../constants";
 import { useFetching } from "../hooks/useFetching";
+import { apiKeyInvalid } from "../utils/validateToken";
 
 type Props = NativeStackScreenProps<RootStackParamList, "auth">;
 
-export const Auth: FC<Props> = () => {
-  const tk = "waka_f7f59e45-5263-4ac3-873f-e48f642f04cb";
+const err =
+  "Invalid api key... check https://wakatime.com/settings for your key";
+
+const tk = "waka_f7f59e45-5263-4ac3-873f-e48f642f04cb";
+export const Auth: FC<Props> = ({ navigation }) => {
   const [token, setToken] = useState<string>(tk);
   const [fetching, isLoading, error] = useFetching(() => auth());
-  const [user, setUser] = useState<User>({} as User);
   const auth = async () => {
     if (token.length > 0) {
-      const err =
-        "Invalid api key... check https://wakatime.com/settings for your key";
+      const isValid = apiKeyInvalid(token);
+      if (!isValid) {
+        alert(err);
+        return;
+      }
+
       const response = await fetch(
         `https://wakatime.com/api/v1/users/current/?api_key=${token}`
       );
       const data = (await response.json()) as UserResponse;
       console.log("data =>", data);
-      setUser({
+      if ("error" in data) {
+        alert("Invalid token");
+        throw new Error("Invalid token");
+      }
+
+      const user = {
         username: data.data.username,
         country: data.data.city.country,
         photo: data.data.photo,
         photoUrl: "",
-      });
-      if ("error" in data) {
-        throw new Error("Invalid token");
-      }
+      };
+
+      await AsyncStorage.setItem("@token", token);
+      navigation.navigate("stats", user);
     }
   };
 
@@ -61,7 +73,6 @@ export const Auth: FC<Props> = () => {
             <SText color={colors.text}>Error {error + ""}</SText>
           </>
         )}
-        {/* <Stats user={user} /> */}
       </Stack>
     </Container>
   );

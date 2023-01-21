@@ -1,7 +1,7 @@
-import { WakatimeStats } from "../@types/wakatimeStats";
+import { StatsResponse } from "../@types/wakatimeStats";
 import { getLanguageColor } from "./languageColors";
 
-type Data = WakatimeStats["data"]["languages"];
+type Data = StatsResponse["data"]["languages"];
 
 export const formatLanguage = (data: Data) => {
   const result = data.map((item) => ({
@@ -9,7 +9,7 @@ export const formatLanguage = (data: Data) => {
     percent: item.percent,
     total_seconds: item.total_seconds,
     text: item.text,
-    color: getLanguageColor[item.name] || "#2cc",
+    color: getLanguageColor?.[item.name] || "#2cc",
     legendFontColor: "#7F7F7F",
   }));
   return result;

@@ -1,4 +1,4 @@
-export interface WakatimeStats {
+export interface StatsResponse {
   data: Data;
 }
 
@@ -131,3 +131,13 @@ export interface Project {
   text: string;
   total_seconds: number;
 }
+
+export interface Languages {
+  name: string;
+  percent: number;
+  total_seconds: number;
+  text: string;
+  color: string;
+  legendFontColor: string;
+}
+[];

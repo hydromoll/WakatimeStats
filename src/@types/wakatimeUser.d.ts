@@ -25,7 +25,7 @@ export interface Data {
   last_plugin: string;
   last_plugin_name: string;
   last_project: string;
-  location: any;
+  location: string;
   logged_time_public: boolean;
   modified_at: string;
   needs_payment_method: boolean;
@@ -34,7 +34,7 @@ export interface Data {
   plan: string;
   profile_url: string;
   profile_url_escaped: string;
-  public_email: any;
+  public_email: string;
   public_profile_time_range: string;
   share_all_time_badge: boolean;
   share_last_year_days: boolean;

@@ -4,6 +4,7 @@ type Error = {
   message: string;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useFetching = (callback: () => Promise<any>) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");

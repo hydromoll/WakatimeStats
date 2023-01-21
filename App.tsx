@@ -8,7 +8,7 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      const tokenCache = await AsyncStorage.getItem("token");
+      const tokenCache = await AsyncStorage.getItem("@token");
       if (tokenCache) {
         setToken(true);
         console.log("token", token);
