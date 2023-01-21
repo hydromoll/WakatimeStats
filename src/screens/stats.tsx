@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Container, Stack, SText } from "hydrostyles";
 import React, { FC, useEffect, useState } from "react";
+import { ScrollView } from "react-native";
 import { LineChart, PieChart } from "react-native-chart-kit";
 import styled from "styled-components/native";
 import { Insights } from "../@types/insights";
@@ -42,7 +43,7 @@ export const Stats: FC<Props> = () => {
   }, []);
 
   return (
-    <Container bg={colors.bg}>
+    <ScrollView style={{ flex: 1, backgroundColor: colors.bg }}>
       <Stack aic mt={55} width={SCREEN_WIDTH} fix>
         <Stack row aic width="100%" justify="space-between" pl={40} pr={40}>
           <Stack>
@@ -82,7 +83,7 @@ export const Stats: FC<Props> = () => {
           paddingLeft="-5"
         />
       </Stack>
-    </Container>
+    </ScrollView>
   );
 };
 

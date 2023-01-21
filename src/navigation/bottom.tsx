@@ -4,6 +4,7 @@ import { RootStackParamList } from "../@types/navigation";
 import { Settings } from "../screens/settings";
 import { Stats } from "../screens/stats";
 import { colors } from "../constants/colors";
+import { Home, Settings as SettingsIcon } from "../components";
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
@@ -18,8 +19,26 @@ export const BottomNavigation = () => {
         },
       }}
     >
-      <Tab.Screen name="home" component={Stats} />
-      <Tab.Screen name="settings" component={Settings} />
+      <Tab.Screen
+        name="home"
+        component={Stats}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <Home fontSize={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="settings"
+        component={Settings}
+        options={{
+          tabBarLabel: "Settings",
+          tabBarIcon: ({ color, size }) => (
+            <SettingsIcon fontSize={size} color={color} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };

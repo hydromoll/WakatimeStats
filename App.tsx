@@ -20,7 +20,7 @@ export default function App() {
 
   return (
     <>
-      <MainNavigation isAuth={!token} />
+      <MainNavigation isAuth={token} />
       <StatusBar style="light" />
     </>
   );
