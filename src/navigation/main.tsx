@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Auth } from "../screens/auth";
 import { Stats } from "../screens/stats";
 import { RootStackParamList } from "../@types/navigation";
+import { BottomNavigation } from "./bottom";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -22,7 +23,8 @@ export const MainNavigation: FC<Props> = ({ isAuth }) => {
         }}
       >
         <Stack.Screen name="auth" component={Auth} />
-        <Stack.Screen name="stats" component={Stats} />
+        <Stack.Screen name="stats" component={BottomNavigation} />
+        {/* <Stack.Screen name="stats" component={Stats} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
