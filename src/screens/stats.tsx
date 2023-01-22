@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Container, Stack, SText } from "hydrostyles";
+import { Stack, SText } from "hydrostyles";
 import React, { FC, useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 import { LineChart, PieChart } from "react-native-chart-kit";
@@ -47,10 +47,10 @@ export const Stats: FC<Props> = () => {
       <Stack aic mt={55} width={SCREEN_WIDTH} fix>
         <Stack row aic width="100%" justify="space-between" pl={40} pr={40}>
           <Stack>
-            <SText fz={30} fw={700} color="white">
+            <SText fz={30} fw={700} color={colors.text}>
               {userData.username}
             </SText>
-            <SText fz={18} fw={600} color="white">
+            <SText fz={18} fw={600} color={colors.text}>
               {userData.country}
             </SText>
           </Stack>
