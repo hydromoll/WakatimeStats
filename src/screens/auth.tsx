@@ -7,6 +7,7 @@ import { RootStackParamList } from "../@types/navigation";
 import { UserResponse } from "../@types/wakatimeUser";
 import { Button } from "../components";
 import { colors } from "../constants";
+import { tk } from "../constants/private";
 import { useFetching } from "../hooks/useFetching";
 import { apiKeyInvalid } from "../utils/validateToken";
 
@@ -15,7 +16,6 @@ type Props = NativeStackScreenProps<RootStackParamList, "auth">;
 const err =
   "Invalid api key... check https://wakatime.com/settings for your key";
 
-const tk = "waka_f7f59e45-5263-4ac3-873f-e48f642f04cb";
 export const Auth: FC<Props> = ({ navigation }) => {
   const [token, setToken] = useState<string>(__DEV__ ? tk : "");
   const [fetching, isLoading, error] = useFetching(() => auth());

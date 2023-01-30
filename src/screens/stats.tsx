@@ -17,7 +17,7 @@ import { secondToHrsAndMin } from "../utils/convertTime";
 type Props = NativeStackScreenProps<RootStackParamList, "stats"> & {
   user: User;
 };
-export const Stats: FC<Props> = () => {
+export const Stats: FC<Props> = ({ navigation }) => {
   const [stats, setStats] = useState<LineChartData>({} as LineChartData);
   const [languages, setLanguages] = useState<Languages[]>([] as Languages[]);
   const [userData, setUserData] = useState<User>({} as User);
@@ -39,6 +39,8 @@ export const Stats: FC<Props> = () => {
         }
       } catch (error) {
         console.log("ERROR", error);
+        alert("Token is expired");
+        navigation.navigate("auth");
       }
     })();
   }, []);

@@ -64,6 +64,9 @@ export class Wakatime {
     const json = (await response.json()) as UserResponse;
     console.log("TOKEN =>", this.token);
     console.log("json", json);
+    if ("error" in json) {
+      throw new Error("Unauthorized");
+    }
     const data = this.formatUserResponse(json);
     return data;
   }
