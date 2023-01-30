@@ -5,19 +5,20 @@ import React, { FC, useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 import { LineChart, PieChart } from "react-native-chart-kit";
 import styled from "styled-components/native";
-import { Insights } from "../@types/insights";
+import { LineChartData } from "../@types/lineChart";
 import { RootStackParamList } from "../@types/navigation";
 import { User } from "../@types/user";
 import { Languages } from "../@types/wakatimeStats";
 import { Wakatime } from "../api/wakatime";
 import { colors, SCREEN_WIDTH } from "../constants";
 import { chartConfig } from "../constants/configs";
+import { secondToHrsAndMin } from "../utils/convertTime";
 
 type Props = NativeStackScreenProps<RootStackParamList, "stats"> & {
   user: User;
 };
 export const Stats: FC<Props> = () => {
-  const [stats, setStats] = useState<Insights>({} as Insights);
+  const [stats, setStats] = useState<LineChartData>({} as LineChartData);
   const [languages, setLanguages] = useState<Languages[]>([] as Languages[]);
   const [userData, setUserData] = useState<User>({} as User);
 
@@ -64,10 +65,11 @@ export const Stats: FC<Props> = () => {
         {"labels" in stats && (
           <LineChart
             data={stats}
-            width={SCREEN_WIDTH - 32}
+            width={SCREEN_WIDTH - 48}
             height={(SCREEN_WIDTH - 32) / 1.3}
             chartConfig={chartConfig}
             bezier
+            formatYLabel={(value) => secondToHrsAndMin(+value)}
           />
         )}
         <SText color={colors.text} fw={600}>

@@ -1,4 +1,5 @@
-import { Insights, InsightsResponse } from "../@types/insights";
+import { InsightsResponse } from "../@types/insights";
+import { LineChartData } from "../@types/lineChart";
 import { User } from "../@types/user";
 import { StatsResponse } from "../@types/wakatimeStats";
 import { UserResponse } from "../@types/wakatimeUser";
@@ -28,7 +29,7 @@ export class Wakatime {
   //TODO: add types
   // This function formats the data from the API call into a format that can be used by the chart.
 
-  private formatInsightsResponse(data: InsightsResponse): Insights {
+  private formatInsightsResponse(data: InsightsResponse): LineChartData {
     const fd = data.data.days.reduce(
       (acc, day) => {
         const { categories } = day;
@@ -53,9 +54,9 @@ export class Wakatime {
           },
         ],
         legend: ["Coding"],
-      }
+      } as LineChartData
     );
-    return fd as Insights;
+    return fd;
   }
 
   async getUser() {

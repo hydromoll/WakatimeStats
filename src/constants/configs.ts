@@ -10,6 +10,7 @@ export const chartConfig = {
   style: {
     borderRadius: 16,
   },
+
   propsForDots: {
     r: "6",
     strokeWidth: "2",
