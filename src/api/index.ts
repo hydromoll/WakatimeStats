@@ -1,3 +1,4 @@
+export { fetchContributors } from "./github";
 const getStats7days =
   "https://wakatime.com/api/v1/users/current/stats/last_7_days?api_key=";
 

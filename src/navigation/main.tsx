@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Auth } from "../screens/auth";
-import { Stats } from "../screens/stats";
 import { RootStackParamList } from "../@types/navigation";
 import { BottomNavigation } from "./bottom";
 
@@ -22,7 +21,13 @@ export const MainNavigation: FC<Props> = ({ isAuth }) => {
           headerShown: false,
         }}
       >
-        <Stack.Screen name="auth" component={Auth} />
+        <Stack.Screen
+          name="auth"
+          component={Auth}
+          options={{ gestureEnabled: false }}
+        />
+        {/*create a new screen with canGoBack false*/}
+
         <Stack.Screen name="stats" component={BottomNavigation} />
         {/* <Stack.Screen name="stats" component={Stats} /> */}
       </Stack.Navigator>
