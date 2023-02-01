@@ -4,23 +4,34 @@ import React, { useEffect, useState } from "react";
 import { MainNavigation } from "./src/navigation/main";
 
 export default function App() {
-  const [token, setToken] = useState<boolean>(false);
-
+  const [isAuth, setIsAuth] = useState(false);
+  const [appLoading, setAppLoading] = useState(true);
   useEffect(() => {
     (async () => {
-      const tokenCache = await AsyncStorage.getItem("@token");
-      if (tokenCache) {
-        setToken(true);
-        console.log("token", token);
-        return;
+      try {
+        const tokenCache = await AsyncStorage.getItem("@token");
+        console.log("TOKEN", tokenCache);
+        if (tokenCache !== null) {
+          setIsAuth(true);
+          console.log("token", isAuth);
+          return;
+        }
+        setIsAuth(false);
+      } catch (error) {
+        console.log("APP ERROR", error);
+      } finally {
+        setAppLoading(false);
       }
-      setToken(false);
     })();
   }, []);
 
+  if (appLoading) {
+    return null;
+  }
+
   return (
     <>
-      <MainNavigation isAuth={token} />
+      <MainNavigation isAuth={isAuth} />
       <StatusBar style="light" />
     </>
   );

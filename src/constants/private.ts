@@ -1,3 +1,3 @@
-const tk = "waka_6eab8ff8-303d-428e-a22e-5a69b39db236";
+const tk = "waka_c442b2f1-add1-41ce-8e3c-032ce3aee74d";
 
 export { tk };

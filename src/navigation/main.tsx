@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Auth } from "../screens/auth";
 import { RootStackParamList } from "../@types/navigation";
 import { BottomNavigation } from "./bottom";
+import { LeaderBoard } from "../screens/leaderBoard";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -12,11 +13,11 @@ interface Props {
 }
 
 export const MainNavigation: FC<Props> = ({ isAuth }) => {
-  console.log(isAuth);
+  console.log("isAuth =>", isAuth);
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={!isAuth ? "stats" : "auth"}
+        initialRouteName={isAuth ? "stats" : "auth"}
         screenOptions={{
           headerShown: false,
         }}
@@ -29,6 +30,7 @@ export const MainNavigation: FC<Props> = ({ isAuth }) => {
         {/*create a new screen with canGoBack false*/}
 
         <Stack.Screen name="stats" component={BottomNavigation} />
+        <Stack.Screen name="leaderBoard" component={LeaderBoard} />
         {/* <Stack.Screen name="stats" component={Stats} /> */}
       </Stack.Navigator>
     </NavigationContainer>

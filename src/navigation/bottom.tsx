@@ -5,6 +5,7 @@ import { Settings } from "../screens/settings";
 import { Stats } from "../screens/stats";
 import { colors } from "../constants/colors";
 import { Home, Settings as SettingsIcon } from "../components";
+import { LeaderBoards } from "../screens/leaderBoards";
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
@@ -22,6 +23,16 @@ export const BottomNavigation = () => {
       <Tab.Screen
         name="home"
         component={Stats}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <Home fontSize={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="leaderBoards"
+        component={LeaderBoards}
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (

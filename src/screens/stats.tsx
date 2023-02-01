@@ -26,7 +26,8 @@ export const Stats: FC<Props> = ({ navigation }) => {
     (async () => {
       try {
         const token = await AsyncStorage.getItem("@token");
-        if (token) {
+        console.log("TOKEN =>", token);
+        if (token !== null) {
           const user = new Wakatime(token);
           const [userRes, languagesStats, insights] = await Promise.all([
             user.getUser(),

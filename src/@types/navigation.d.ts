@@ -6,4 +6,6 @@ export type RootStackParamList = {
   stats: User;
   home: undefined;
   settings: undefined;
+  leaderBoards: undefined;
+  leaderBoard: { id: string; name: string };
 };
