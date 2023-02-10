@@ -6,6 +6,7 @@ import { Stats } from "../screens/stats";
 import { colors } from "../constants/colors";
 import { Home, Settings as SettingsIcon } from "../components";
 import { LeaderBoards } from "../screens/leaderBoards";
+import { Cup } from "../components/icons";
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
@@ -34,9 +35,9 @@ export const BottomNavigation = () => {
         name="leaderBoards"
         component={LeaderBoards}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "Leaderboards",
           tabBarIcon: ({ color, size }) => (
-            <Home fontSize={size} color={color} />
+            <Cup fontSize={size} color={color} />
           ),
         }}
       />

@@ -11,6 +11,8 @@ npm-debug.*
 *.orig.*
 web-build/
 
+src/constants/private.ts
+
 # macOS
 .DS_Store
 
@@ -74,4 +76,4 @@ web-build/
 dist/
 
 # @end expo-cli
-src/screens/leaderBoard.tsx
+

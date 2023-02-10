@@ -42,3 +42,38 @@ export const Settings = (props: SvgProps) => {
     </Svg>
   );
 };
+
+export function Cup(props: SvgProps) {
+  return (
+    <Svg
+      width={props.fontSize || 24}
+      height={props.fontSize || 24}
+      fill="none"
+      {...props}
+    >
+      <Path
+        d="M12 17a6 6 0 01-6-6m6 6a6 6 0 006-6m-6 6v4M6 11V5a2 2 0 012-2h8a2 2 0 012 2v6M6 11V7a2 2 0 10-4 0 4 4 0 004 4zm12 0V7a2 2 0 114 0 4 4 0 01-4 4zm-6 10H9m3 0h3"
+        stroke={props.color || "#28303F"}
+        strokeWidth={1.5}
+        strokeLinecap="round"
+      />
+    </Svg>
+  );
+}
+
+export const Back = (props: SvgProps) => {
+  return (
+    <Svg
+      width={props.fontSize || 24}
+      height={props.fontSize || 24}
+      fill="none"
+      // xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Path
+        d="M16.175 24a1.572 1.572 0 01-1.226-.581L7.358 13.99a1.57 1.57 0 010-1.996l7.858-9.427a1.574 1.574 0 012.42 2.01l-7.025 8.423 6.79 8.422A1.57 1.57 0 0116.175 24z"
+        fill="#fff"
+      />
+    </Svg>
+  );
+};

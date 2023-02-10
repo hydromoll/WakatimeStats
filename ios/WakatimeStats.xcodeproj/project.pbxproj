@@ -19,6 +19,8 @@
 		A84F966B297D97D6003462D9 /* WakaWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A84F9667297D97D3003462D9 /* WakaWidget.intentdefinition */; };
 		A84F966C297D97D6003462D9 /* WakaWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A84F9667297D97D3003462D9 /* WakaWidget.intentdefinition */; };
 		A84F966F297D97D6003462D9 /* WakaWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A84F965F297D97D3003462D9 /* WakaWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A8BF150D299651DA005F1625 /* DataSetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BF150C299651DA005F1625 /* DataSetter.swift */; };
+		A8BF150F299652C2005F1625 /* DataSetter.m in Sources */ = {isa = PBXBuildFile; fileRef = A8BF150E299652C2005F1625 /* DataSetter.m */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		EBA171ECC7CC4DBD984F2CC9 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C383808C19B48129F5C9A32 /* noop-file.swift */; };
@@ -67,6 +69,10 @@
 		A84F9667297D97D3003462D9 /* WakaWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = WakaWidget.intentdefinition; sourceTree = "<group>"; };
 		A84F9668297D97D6003462D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A84F966A297D97D6003462D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A87C726A29964AC600573B11 /* WakaWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WakaWidgetExtension.entitlements; sourceTree = "<group>"; };
+		A8BF150B2996516F005F1625 /* WakatimeStats--Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WakatimeStats--Bridging-Header.h"; sourceTree = "<group>"; };
+		A8BF150C299651DA005F1625 /* DataSetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSetter.swift; sourceTree = "<group>"; };
+		A8BF150E299652C2005F1625 /* DataSetter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataSetter.m; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = WakatimeStats/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -106,6 +112,9 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
 				7C383808C19B48129F5C9A32 /* noop-file.swift */,
+				A8BF150B2996516F005F1625 /* WakatimeStats--Bridging-Header.h */,
+				A8BF150C299651DA005F1625 /* DataSetter.swift */,
+				A8BF150E299652C2005F1625 /* DataSetter.m */,
 			);
 			name = WakatimeStats;
 			sourceTree = "<group>";
@@ -131,6 +140,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A87C726A29964AC600573B11 /* WakaWidgetExtension.entitlements */,
 				13B07FAE1A68108700A75B9A /* WakatimeStats */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				A84F9664297D97D3003462D9 /* WakaWidget */,
@@ -251,10 +261,12 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = K5RU38J3VH;
 						LastSwiftMigration = 1250;
 					};
 					A84F965E297D97D3003462D9 = {
 						CreatedOnToolsVersion = 13.4.1;
+						DevelopmentTeam = K5RU38J3VH;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -385,7 +397,9 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				A84F966C297D97D6003462D9 /* WakaWidget.intentdefinition in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				A8BF150F299652C2005F1625 /* DataSetter.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
+				A8BF150D299651DA005F1625 /* DataSetter.swift in Sources */,
 				EBA171ECC7CC4DBD984F2CC9 /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,6 +433,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = WakatimeStats/WakatimeStats.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K5RU38J3VH;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -451,6 +466,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = WakatimeStats/WakatimeStats.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K5RU38J3VH;
 				INFOPLIST_FILE = WakatimeStats/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -587,9 +603,11 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = WakaWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = K5RU38J3VH;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WakaWidget/Info.plist;
@@ -624,10 +642,12 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = WakaWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = K5RU38J3VH;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WakaWidget/Info.plist;
