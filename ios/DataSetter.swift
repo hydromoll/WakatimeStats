@@ -22,7 +22,7 @@ class DataSetter:NSObject {
   let shaderDefaults = UserDefaults.init(suiteName: widgetGroupId)
   override init(){
 //    self.carData = try! JSONEncoder().encode(car)
-    self.model = shaderDefaults?.integer(forKey: "Agee") ?? 100
+    self.model = shaderDefaults?.string(forKey: "Agee") ?? "Hello"
   }
   
   var model:Any;
@@ -36,15 +36,15 @@ class DataSetter:NSObject {
   
   
   @objc
-  private func setData() -> Void {
+  private func setData(_ age:String) -> Void {
     if shaderDefaults != nil{
-      shaderDefaults!.set(120, forKey: "Agee")
+      shaderDefaults!.set(age, forKey: "Agee")
     }
     
   }
   @objc
   private func getData() -> Int{
-    let encodedData = shaderDefaults?.integer(forKey: "Age")
+    let encodedData = shaderDefaults?.string(forKey: "Age")
     let decoder = JSONDecoder()
     if encodedData != nil{
       return 25
@@ -53,6 +53,6 @@ class DataSetter:NSObject {
   }
   @objc
   func constantsToExport() ->[AnyHashable:Any]{
-    return ["model": shaderDefaults?.integer(forKey: "Agee") ?? 100]
+    return ["model": shaderDefaults?.string(forKey: "Agee") ?? "100"]
   }
 }

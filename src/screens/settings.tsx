@@ -10,23 +10,8 @@ import { RootStackParamList } from "../@types/navigation";
 import { FlatList, Linking, NativeModules } from "react-native";
 import { fetchContributors } from "../api";
 import { Contributors } from "../@types/github";
-import SharedGroupPreferences from "react-native-shared-group-preferences";
 
 type Props = NativeStackScreenProps<RootStackParamList, "settings">;
-
-const appGroupIdentifier = "group.com.hydromoll.wakatime";
-
-interface Car {
-  make: string;
-  model: string;
-  owner: string;
-}
-
-const widgetData: Car = {
-  make: "Toyota",
-  model: "Camry",
-  owner: "John Doe",
-};
 
 export const Settings: FC<Props> = ({ navigation }) => {
   const [contributors, setContributors] = useState<Contributors>([]);
@@ -44,29 +29,9 @@ export const Settings: FC<Props> = ({ navigation }) => {
     })();
   }, []);
 
-  const handleSubmit = async () => {
+  const saveDataToSharedGroup = () => {
     try {
-      // iOS
-
-      await SharedGroupPreferences;
-
-      await SharedGroupPreferences.setItem(
-        "widgetKey",
-        appGroupIdentifier,
-        widgetData
-      );
-    } catch (error) {
-      console.log({ error });
-    }
-    // Android
-  };
-  // const widgetData = {
-  //   text: "Hello from React Native!",
-  // };
-
-  const saveDataToSharedGroup = async () => {
-    try {
-      NativeModules.DataSetter.setData();
+      NativeModules.DataSetter.setData("Hello from react native");
     } catch (e) {
       console.log(e);
     }
@@ -75,10 +40,6 @@ export const Settings: FC<Props> = ({ navigation }) => {
   const getDataFromSharedGroup = async () => {
     try {
       const cacheData = NativeModules.DataGetter.getConstants();
-      // const loadedData = await SharedGroupPreferences.getItem(
-      //   "carData",
-      //   appGroupIdentifier
-      // );
       console.log(cacheData);
     } catch (error) {
       console.log("Error =>", error);

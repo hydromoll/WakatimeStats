@@ -12,6 +12,10 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
 		96905EF65AED1B983A6B3ABC /* libPods-WakatimeStats.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-WakatimeStats.a */; };
+		A82F3EB6299A74A400288B9B /* ApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82F3EB5299A74A400288B9B /* ApiProvider.swift */; };
+		A82F3EB8299A75EA00288B9B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82F3EB7299A75EA00288B9B /* Model.swift */; };
+		A82F3EB9299A993100288B9B /* ApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82F3EB5299A74A400288B9B /* ApiProvider.swift */; };
+		A82F3EBA299A995400288B9B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82F3EB7299A75EA00288B9B /* Model.swift */; };
 		A84F9661297D97D3003462D9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A84F9660297D97D3003462D9 /* WidgetKit.framework */; };
 		A84F9663297D97D3003462D9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A84F9662297D97D3003462D9 /* SwiftUI.framework */; };
 		A84F9666297D97D3003462D9 /* WakaWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F9665297D97D3003462D9 /* WakaWidget.swift */; };
@@ -62,6 +66,8 @@
 		6C2E3173556A471DD304B334 /* Pods-WakatimeStats.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WakatimeStats.debug.xcconfig"; path = "Target Support Files/Pods-WakatimeStats/Pods-WakatimeStats.debug.xcconfig"; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-WakatimeStats.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WakatimeStats.release.xcconfig"; path = "Target Support Files/Pods-WakatimeStats/Pods-WakatimeStats.release.xcconfig"; sourceTree = "<group>"; };
 		7C383808C19B48129F5C9A32 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "WakatimeStats/noop-file.swift"; sourceTree = "<group>"; };
+		A82F3EB5299A74A400288B9B /* ApiProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiProvider.swift; sourceTree = "<group>"; };
+		A82F3EB7299A75EA00288B9B /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		A84F965F297D97D3003462D9 /* WakaWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WakaWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A84F9660297D97D3003462D9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		A84F9662297D97D3003462D9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -178,6 +184,8 @@
 				A84F9667297D97D3003462D9 /* WakaWidget.intentdefinition */,
 				A84F9668297D97D6003462D9 /* Assets.xcassets */,
 				A84F966A297D97D6003462D9 /* Info.plist */,
+				A82F3EB5299A74A400288B9B /* ApiProvider.swift */,
+				A82F3EB7299A75EA00288B9B /* Model.swift */,
 			);
 			path = WakaWidget;
 			sourceTree = "<group>";
@@ -394,7 +402,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A82F3EB8299A75EA00288B9B /* Model.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				A82F3EB6299A74A400288B9B /* ApiProvider.swift in Sources */,
 				A84F966C297D97D6003462D9 /* WakaWidget.intentdefinition in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				A8BF150F299652C2005F1625 /* DataSetter.m in Sources */,
@@ -408,8 +418,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A82F3EB9299A993100288B9B /* ApiProvider.swift in Sources */,
 				A84F966B297D97D6003462D9 /* WakaWidget.intentdefinition in Sources */,
 				A84F9666297D97D3003462D9 /* WakaWidget.swift in Sources */,
+				A82F3EBA299A995400288B9B /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

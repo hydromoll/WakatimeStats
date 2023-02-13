@@ -9,7 +9,7 @@
 #import "React/RCTBridgeModule.h"
 
 @interface RCT_EXTERN_MODULE (DataSetter, NSObject)
-RCT_EXTERN_METHOD(setData)
+RCT_EXTERN_METHOD(setData:(NSString*)age)
 RCT_EXTERN_METHOD(getData)
 RCT_EXTERN_METHOD(constantsToExport)
 
