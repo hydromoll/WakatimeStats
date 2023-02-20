@@ -17,7 +17,10 @@ const err =
   "Invalid api key... check https://wakatime.com/settings for your key";
 
 export const Auth: FC<Props> = ({ navigation }) => {
-  const [token, setToken] = useState<string>(__DEV__ ? tk : "");
+  // const [token, setToken] = useState<string>(__DEV__ ? tk : "");
+  const [token, setToken] = useState<string>(
+    "waka_4268e386-4e34-42d7-82be-13de0c59ca69"
+  );
   const [fetching, isLoading, error] = useFetching(() => auth());
   const auth = async () => {
     if (token.length > 0) {

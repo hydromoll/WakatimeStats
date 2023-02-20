@@ -7,31 +7,17 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LeaderBoardsResponse } from "../@types/wakatimeLeaderBoards";
 import { colors, SCREEN_WIDTH } from "../constants";
 import { FlatList } from "react-native";
+import { callbackPersist } from "../utils/cahcingFetch";
+import { StorageKeys } from "../constants/storageKeys";
 
 type Props = NativeStackScreenProps<RootStackParamList, "leaderBoards">;
-
-const mockData = [
-  {
-    can_delete: false,
-    can_edit: false,
-    created_at: "2022-09-06T09:48:25Z",
-    has_available_seat: false,
-    id: "1ef5e9e5-ffc4-4aee-b738-be2bf092cc43",
-    members_count: 3,
-    members_with_timezones_count: 3,
-    modified_at: "2023-01-18T10:09:13Z",
-    name: "Who's better",
-    time_range: "last_7_days",
-  },
-];
 
 export const LeaderBoards: FC<Props> = ({ navigation }) => {
   const [leaderBoards, setLeaderBoards] = useState<
     LeaderBoardsResponse["data"]
-  >(__DEV__ ? mockData : ([] as LeaderBoardsResponse["data"]));
+  >([] as LeaderBoardsResponse["data"]);
 
   useEffect(() => {
-    if (__DEV__) return;
     (async () => {
       try {
         const token = await AsyncStorage.getItem("@token");
@@ -39,7 +25,11 @@ export const LeaderBoards: FC<Props> = ({ navigation }) => {
 
         const api = new Wakatime(token);
 
-        const data = await api.fetchLeaderBoards();
+        const data = await callbackPersist(
+          StorageKeys.leaderBoards,
+          () => api.fetchLeaderBoards(),
+          60
+        );
         if (data) {
           setLeaderBoards(data.data);
         }

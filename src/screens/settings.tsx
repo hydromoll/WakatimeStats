@@ -10,6 +10,8 @@ import { RootStackParamList } from "../@types/navigation";
 import { FlatList, Linking, NativeModules } from "react-native";
 import { fetchContributors } from "../api";
 import { Contributors } from "../@types/github";
+import { StorageKeys } from "../constants/storageKeys";
+import { callbackPersist } from "../utils/cahcingFetch";
 
 type Props = NativeStackScreenProps<RootStackParamList, "settings">;
 
@@ -19,7 +21,11 @@ export const Settings: FC<Props> = ({ navigation }) => {
   useEffect(() => {
     (async () => {
       try {
-        const data = await fetchContributors();
+        const data = await callbackPersist(
+          StorageKeys.contributors,
+          () => fetchContributors(),
+          600
+        );
         if (data) {
           setContributors(data);
         }
@@ -55,35 +61,18 @@ export const Settings: FC<Props> = ({ navigation }) => {
     }
   };
 
+  console.log("contributors =>", contributors);
   //TODO: Add more contributors (fetch from github api)
-
-  //create function that fetch contributors from github api
-
-  // const fetchContributors = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       `https://api.github.com/repos/hydromoll/wakatime-app/contributors`
-  //     );
-  //     const data = await response.json();
-  //     console.log("data =>", data);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
-
-  //generate contributors list
 
   return (
     <Container bg={colors.bg} ph={40}>
-      <Stack mt={55} width={SCREEN_WIDTH - 80} aic>
-        <SText color="white" fz={18} fw={600}>
-          Settings
-        </SText>
-
-        <Stack width="100%" mt={40}>
-          <SText color="white" fz={28} fw={600}>
+      <Stack mt={50} width={SCREEN_WIDTH - 80} aic>
+        <Stack width="100%">
+          <SText color={colors.text} fz={30} fw="bold" mt={50}>
             Contributors
           </SText>
+        </Stack>
+        <Stack width="100%">
           <FlatList
             data={contributors}
             keyExtractor={(item) => item.id.toString()}
@@ -111,18 +100,22 @@ export const Settings: FC<Props> = ({ navigation }) => {
           />
         </Stack>
         <Button mt={50} bg={colors.red} title="Log out" onPress={logout} />
-        <Button
-          mt={50}
-          bg={colors.blue}
-          title="Save data"
-          onPress={saveDataToSharedGroup}
-        />
-        <Button
-          mt={50}
-          bg={colors.blue}
-          title="Log data"
-          onPress={getDataFromSharedGroup}
-        />
+        {__DEV__ && (
+          <>
+            <Button
+              mt={50}
+              bg={colors.blue}
+              title="Save data"
+              onPress={saveDataToSharedGroup}
+            />
+            <Button
+              mt={50}
+              bg={colors.blue}
+              title="Log data"
+              onPress={getDataFromSharedGroup}
+            />
+          </>
+        )}
       </Stack>
     </Container>
   );

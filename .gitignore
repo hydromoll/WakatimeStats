@@ -11,8 +11,6 @@ npm-debug.*
 *.orig.*
 web-build/
 
-src/constants/private.ts
-
 # macOS
 .DS_Store
 

@@ -4,6 +4,9 @@ import Intents
 
 private let widgetGroupId = "group.com.hydromoll.wakatime"
 
+let todayTime = 100
+
+let dayliTime = 200
 
 
 struct WidgetData: Decodable {
@@ -65,45 +68,49 @@ struct Provider: IntentTimelineProvider {
     let timeline = Timeline(entries: entries, policy: .after(nextRefresh))
     completion(timeline)
   }
-
   
   
-  private func circleCalculate(daily:Int, today:Int) -> CGFloat{
-    
-    let percentage = (today * 100) / daily
-    
-    return CGFloat(percentage / 100);
-  }
 
   struct MyWidgetEntryView : View {
     var entry: Provider.Entry
     @StateObject var stats = ApiProvider()
     
+     
     
-//    let smallCircle = circleCalculate(daily: self.stats.dailyAverageSeconds, today: self.stats.todaySeconds)
+    private let percantage = 0.5 + Double((todayTime / dayliTime))
+    
+    private func sliceString(str: String, start: Int, end: Int) -> String {
+        let data = Array(str)
+        return String(data[start..<end])
+    }
     
     var body: some View {
+      ZStack{
+//        ZStack{
+//          Circle()
+//            .trim(from: 0.5, to: 1)
+//            .stroke(lineWidth: 9)
+//            .foregroundColor(.cyan)
+//          Circle()
+//            .trim(from: 0.5, to:  0.5 + (percantage / 2))
+//            .stroke(lineWidth: 12)
+//            .foregroundColor(.red)
+//        }
+//        .padding(20)
           VStack {
-            Text(entry.text)
+            Text("All coding time:  \(entry.text)")
               .bold()
               .foregroundColor(.black)
-            Text(String(stats.todaySeconds))
-              .bold()
-              .foregroundColor(.black)
-            ZStack{
-              Circle()
-                .trim(from: 0.5, to: 1)
-                .stroke(lineWidth: 5)
-                .foregroundColor(.cyan)
-  //              .background(.red)
-              Circle()
-                .trim(from: 0.5, to: 0.8)
-                .stroke(lineWidth: 3)
-                .foregroundColor(.red)
-  //              .background(.red)
-            }
+              .multilineTextAlignment(.center)
+              
+//            Text(sliceString(str:String(percantage * 100),start:0,end:2) + "%")
+//              .bold()
+//              .foregroundColor(.black)
+//
             
-          }.padding(20)
+          }
+          .padding(10)
+      }
     }
   }
 

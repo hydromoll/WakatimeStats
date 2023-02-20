@@ -1,3 +1,4 @@
+import { AllTimeResponse } from "../@types/allTime";
 import { InsightsResponse } from "../@types/insights";
 import { LineChartData } from "../@types/lineChart";
 import { User } from "../@types/user";
@@ -5,7 +6,18 @@ import { LeaderBoardResponse } from "../@types/WakatimeLeaderBoard";
 import { LeaderBoardsResponse } from "../@types/wakatimeLeaderBoards";
 import { StatsResponse } from "../@types/wakatimeStats";
 import { UserResponse } from "../@types/wakatimeUser";
-import { formatLanguage } from "../utils/languageDataFormatter";
+import { getLanguageColor } from "../utils/languageColors";
+
+type Data = StatsResponse["data"]["languages"];
+
+interface Bla {
+  name: string;
+  percent: number;
+  total_seconds: number;
+  text: string;
+  color: string;
+  legendFontColor: string;
+}
 
 interface LeaderBoardData {
   id: string;
@@ -29,6 +41,8 @@ export class Wakatime {
 
   private insightsLink = `https://wakatime.com/api/v1/users/current/insights/days/last_7_days?api_key=`;
 
+  private allTimeLink = `https://wakatime.com/api/v1/users/current/all_time_since_today?api_key=`;
+
   private leaderBoardLink =
     "https://wakatime.com/api/v1/users/current/leaderboards/";
 
@@ -38,6 +52,24 @@ export class Wakatime {
       photo: data.data.photo,
       country: data.data.city.country,
     };
+  }
+
+  private formatLanguage(data: Data) {
+    const result = data.reduce((acc, prev) => {
+      if (prev.percent >= 1) {
+        const data: Bla = {
+          name: prev.name,
+          percent: prev.percent,
+          total_seconds: prev.total_seconds,
+          text: prev.text,
+          color: getLanguageColor?.[prev.name] || "#2cc",
+          legendFontColor: "#7F7F7F",
+        };
+        acc.push(data);
+      }
+      return acc;
+    }, [] as Bla[]);
+    return result;
   }
 
   // private formatStatsResponse(data: Response) {}
@@ -81,7 +113,8 @@ export class Wakatime {
       const { user, running_total } = item;
       const { daily_average, languages, human_readable_total } = running_total;
       const { display_name } = user;
-      const data = {
+      const data: LeaderBoardData = {
+        id: user.id,
         name: display_name,
         rank: item.rank,
         hours: human_readable_total,
@@ -109,7 +142,7 @@ export class Wakatime {
   async getStats() {
     const response = await fetch(this.statsLink + this.token);
     const json = (await response.json()) as StatsResponse;
-    const data = formatLanguage(json.data.languages);
+    const data = this.formatLanguage(json.data.languages);
     return data;
   }
 
@@ -145,5 +178,14 @@ export class Wakatime {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  async getAllTime() {
+    const response = await fetch(this.allTimeLink + this.token);
+    const json = (await response.json()) as AllTimeResponse;
+    console.log("====================================");
+    console.log("json all time =>", json);
+    console.log("====================================");
+    return json.data.text;
   }
 }

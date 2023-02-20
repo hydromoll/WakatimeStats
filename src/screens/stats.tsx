@@ -2,25 +2,45 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Stack, SText } from "hydrostyles";
 import React, { FC, useEffect, useState } from "react";
-import { ScrollView } from "react-native";
+import { NativeModules, Platform, ScrollView } from "react-native";
 import { LineChart, PieChart } from "react-native-chart-kit";
 import styled from "styled-components/native";
 import { LineChartData } from "../@types/lineChart";
+import { INativeModules } from "../@types/nativeModules";
 import { RootStackParamList } from "../@types/navigation";
 import { User } from "../@types/user";
 import { Languages } from "../@types/wakatimeStats";
 import { Wakatime } from "../api/wakatime";
 import { colors, SCREEN_WIDTH } from "../constants";
 import { chartConfig } from "../constants/configs";
+import { callbackPersist } from "../utils/cahcingFetch";
 import { secondToHrsAndMin } from "../utils/convertTime";
 
 type Props = NativeStackScreenProps<RootStackParamList, "stats"> & {
   user: User;
 };
+//TODO: remove any
+const promiseValidator = (
+  promise: PromiseSettledResult<any>,
+  setter: (data: any) => void
+) => {
+  if (promise.status === "fulfilled") {
+    setter(promise.value);
+  }
+};
+
+const nativeModules = NativeModules.DataSetter as INativeModules;
+
 export const Stats: FC<Props> = ({ navigation }) => {
   const [stats, setStats] = useState<LineChartData>({} as LineChartData);
   const [languages, setLanguages] = useState<Languages[]>([] as Languages[]);
   const [userData, setUserData] = useState<User>({} as User);
+  const [allTime, setAllTime] = useState("");
+
+  const allTimeSetter = (value: string) => {
+    setAllTime(value);
+    Platform.OS === "ios" && nativeModules.setData(value);
+  };
 
   useEffect(() => {
     (async () => {
@@ -29,14 +49,17 @@ export const Stats: FC<Props> = ({ navigation }) => {
         console.log("TOKEN =>", token);
         if (token !== null) {
           const user = new Wakatime(token);
-          const [userRes, languagesStats, insights] = await Promise.all([
-            user.getUser(),
-            user.getStats(),
-            user.getInsights(),
-          ]);
-          setUserData(userRes);
-          setLanguages(languagesStats);
-          setStats(insights);
+          const [userRes, languagesStats, insights, allTime] =
+            await Promise.allSettled([
+              callbackPersist("@user", () => user.getUser(), 600),
+              callbackPersist("@stats", () => user.getStats(), 600),
+              callbackPersist("@insights", () => user.getInsights(), 0),
+              callbackPersist("@allTime", () => user.getAllTime(), 15),
+            ]);
+          promiseValidator(userRes, setUserData);
+          promiseValidator(languagesStats, setLanguages);
+          promiseValidator(insights, setStats);
+          promiseValidator(allTime, allTimeSetter);
         }
       } catch (error) {
         console.log("ERROR", error);
@@ -57,11 +80,15 @@ export const Stats: FC<Props> = ({ navigation }) => {
             <SText fz={18} fw={600} color={colors.text}>
               {userData.country}
             </SText>
+            {allTime !== "" && (
+              <SText fz={13} mt={8} fw={600} color={colors.text}>
+                All time: {allTime}
+              </SText>
+            )}
           </Stack>
           <Image
             source={{
-              uri:
-                userData.photo + "?s=420&cache=false&time=1674125384.4396436",
+              uri: userData.photo + "?s=420&cache=false",
             }}
           />
         </Stack>
@@ -97,162 +124,3 @@ const Image = styled.Image`
   width: 100px;
   border-radius: 50px;
 `;
-
-// const languageData = [
-//   {
-//     name: "TypeScript",
-//     percent: 82.85,
-//     total_seconds: 47138,
-//     text: "13 hrs 5 mins",
-//     color: langToColor["TypeScript"],
-//     legendFontColor: "#7F7F7F",
-//     legendFontSize: 15,
-//   },
-//   {
-//     name: "JSON",
-//     percent: 7.53,
-//     total_seconds: 4283,
-//     text: "1 hr 11 mins",
-//     color: langToColor["JSON"],
-//     legendFontColor: "#7F7F7F",
-//     legendFontSize: 15,
-//   },
-//   {
-//     name: "Other",
-//     percent: 5.25,
-//     total_seconds: 2985,
-//     text: "49 mins",
-//     color: langToColor["Other"],
-//     legendFontColor: "#7F7F7F",
-//   },
-//   {
-//     name: "Swift",
-//     percent: 1.83,
-//     total_seconds: 1041,
-//     text: "17 mins",
-//     color: langToColor["Swift"],
-//     legendFontColor: "#7F7F7F",
-//   },
-//   {
-//     name: "Git Config",
-//     percent: 1.32,
-//     total_seconds: 749,
-//     color: langToColor["JSON"],
-//     legendFontColor: "#7F7F7F",
-//     text: "12 mins",
-//   },
-//   {
-//     name: "Objective-C++",
-//     percent: 0.39,
-//     total_seconds: 219,
-//     text: "3 mins",
-//     color: langToColor["TypeScript"],
-//     legendFontColor: "#7F7F7F",
-//   },
-//   {
-//     name: "JavaScript",
-//     percent: 0.25,
-//     total_seconds: 143,
-//     color: "rgba(131, 7, 44, 1)",
-//     text: "2 mins",
-//     legendFontColor: "#7F7F7F",
-//   },
-//   {
-//     name: "Python",
-//     percent: 0.24,
-//     total_seconds: 138,
-//     text: "2 mins",
-//     legendFontColor: "#7F7F7F",
-//     color: "rgba(131, 67, 234, 1)",
-//   },
-//   {
-//     name: "Objective-C",
-//     percent: 0.18,
-//     total_seconds: 104.401133,
-//     color: "rgba(131, 67, 234, 1)",
-//     legendFontColor: "#7F7F7F",
-//     text: "1 min",
-//   },
-//   {
-//     name: "XML",
-//     percent: 0.15,
-//     total_seconds: 88.021328,
-//     text: "1 min",
-//     legendFontColor: "#7F7F7F",
-//     color: "rgba(131, 67, 234, 1)",
-//   },
-// ];
-
-// const langData = formatLanguage(languageData);
-
-// const dataGraph = {
-//   labels: ["January", "February", "March", "April", "May", "June"],
-//   datasets: [
-//     {
-//       data: [20, 45, 28, 80, 99, 43],
-//       color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-//       strokeWidth: 8, // optional
-//     },
-//   ],
-//   legend: ["Week stats"], // optional
-// };
-
-// const dg: typeof dataGraph = {
-//   labels: ["01.12", "01.13", "01.14", "01.15", "01.16", "01.17", "01.18"],
-//   datasets: [
-//     {
-//       data: [11788, 15666, 10144, 2113, 3682, 9302, 4087],
-//       color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-//       strokeWidth: 8,
-//     },
-//   ],
-//   legend: ["Week stats"],
-// };
-// interface Props {
-//   user: User;
-// }
-
-// const data = [
-//   {
-//     name: "Seoul",
-//     population: 21500000,
-//     color: "rgba(131, 167, 234, 1)",
-//     legendFontColor: "#7F7F7F",
-//     legendFontSize: 15,
-//   },
-//   {
-//     name: "Toronto",
-//     population: 2800000,
-//     color: "#F00",
-//     legendFontColor: "#7F7F7F",
-//     legendFontSize: 15,
-//   },
-//   {
-//     name: "Beijing",
-//     population: 527612,
-//     color: "red",
-//     legendFontColor: "#7F7F7F",
-//     legendFontSize: 15,
-//   },
-//   {
-//     name: "New York",
-//     population: 8538000,
-//     color: "#ffffff",
-//     legendFontColor: "#7F7F7F",
-//     legendFontSize: 15,
-//   },
-//   {
-//     name: "Moscow",
-//     population: 11920000,
-//     color: "rgb(0, 0, 255)",
-//     legendFontColor: "#7F7F7F",
-//     legendFontSize: 15,
-//   },
-// ];
-
-// const langToColor = {
-//   TypeScript: "rgb(49, 133, 156)",
-//   JSON: "#1f77b4",
-//   Other: "#1f9aef",
-//   Swift: "#ffac45",
-// };
